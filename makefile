@@ -11,15 +11,6 @@
 # makefile for the example programs 
 #
 
-# Tru64 UNIX compile flags
-T64CC = cc
-T64CFLAGS = -g -std1 -warnprotos -pthread
-T64LDFLAGS = -non_shared
-T64LDFLAGS_T = ${T64LDFLAGS} -pthread
-T64SFLAGS =
-T64NOANSI = ${T64CFLAGS}
-
-
 # GCC/Linux compile flags
 GNUCC = gcc
 GNUCFLAGS = -g -ansi -Wstrict-prototypes
@@ -39,12 +30,11 @@ NOANSI = ${GNUNOANSI}
 
 all : simple simple_threads simple_processes simple_mutex 
 
-
 simple : simple.o
 	${CC} ${CFLAGS} simple.o -o simple
 
 simple_threads : simple_threads.o
-	${CC} ${CFLAGS} ${LDFLAGS_T} simple_threads.o -o simple_threads 
+	${CC} ${CFLAGS} simple_threads.o -o simple_threads ${LDFLAGS_T} 
 
 # SVID and XOPEN flags required with GCC on Linux
 simple_processes.o : simple_processes.c
@@ -54,7 +44,7 @@ simple_processes : simple_processes.o
 	${CC} ${CFLAGS} simple_processes.o -o simple_processes
 
 simple_mutex : simple_mutex.o
-	${CC} ${CFLAGS} ${LDFLAGS_T} simple_mutex.o -o simple_mutex
+	${CC} ${CFLAGS} simple_mutex.o -o simple_mutex ${LDFLAGS_T} 
 
 clean :
 	rm -f *.o *~ *# core  a.out\
